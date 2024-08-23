@@ -3,8 +3,10 @@
 @tailwind utilities;
 
 
-/* .nested:hover+.hidden,
-.hidden:hover {
-    display: flex;
-    flex-direction: column;
-} */
+.form-control {
+    @apply min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500
+}
+
+.btn-primary {
+    @apply cursor-pointer px-4 py-2 border border-orange-500 my-4 rounded w-1/3 self-center shadow-sm transition hover:bg-orange-600 hover:text-white active:scale-90
+}

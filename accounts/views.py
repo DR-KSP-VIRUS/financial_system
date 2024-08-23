@@ -26,6 +26,8 @@ def user_dashboard(request:HttpRequest) -> HttpResponse:
     products = smdl.Product.objects.all()
     categories = smdl.ProductType.objects.all()
     orders = smdl.Order.objects.all()
+    today_orders = smdl.Order.today_orders()
+    print(today_orders)
     context = {
         "products":products,
         "categories":categories,

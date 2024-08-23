@@ -95,9 +95,9 @@ const formatTable = () => {
             <td class="px-6 py-4 whitespace-nowrap">${record.product}</td>
             <td class="px-6 py-4 md:text-center">${record.amount}</td>
             <td class="px-6 py-4 flex place-items-center place-content-center md:text-center">
-                <span class="minus text-2xl cursor-pointer font-bold text-gray-600 mx-2 px-4 bg-white border rounded">&minus;</span>
-                <span class="quantities text-lg text-black transition active:scale-90">${record.quantity}</span>
-                <span class="plus text-2xl font-bold text-emerald-600 mx-2 cursor-pointer px-4 bg-white border rounded transition-all active:scale-90">&plus;</span>
+                <button class="minus transition text-2xl cursor-pointer font-bold text-gray-600 mx-2 px-4 bg-white border rounded active:scale-90 ">&minus;</button>
+                <span class="quantities text-lg text-black ">${record.quantity}</span>
+                <button class="plus text-2xl font-bold text-emerald-600 mx-2 cursor-pointer px-4 bg-white border rounded transition-all active:scale-90">&plus;</button>
             </td>
             <td class="whitespace-nowrap px-6 py-4 md:text-center">Price: Gh&cent; 
             <span class="subtotal">${record.amount}</span></td>

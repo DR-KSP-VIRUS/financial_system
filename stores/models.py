@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.db import models
 from django.contrib.auth import get_user_model
 # Create your models here.
@@ -57,3 +58,12 @@ class Order(models.Model):
 
     def __str__(self):
         return self.product.product_name
+    
+
+    @classmethod
+    def today_orders(cls):
+        return [
+            order for order in cls.objects.all()
+            if order.created.date() == datetime.today().date()
+    ]
+

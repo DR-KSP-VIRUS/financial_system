@@ -123,8 +123,11 @@ def place_orders(request:HttpRequest, *args, **kwargs) -> JsonResponse:
     orders = json.loads(request.body)
     for order in orders:
         product = get_object_or_404(mdl.Product, pk=order['id'])
-        product.quantity -= order['quantity']
-        new_order = mdl.Order.objects.create(product=product,quantity=order['quantity'])
-        # new_order.save()
-        # product.save()
+        if product.quantity >= int(order['quantity']):
+            product.quantity -= order['quantity']
+            new_order = mdl.Order.objects.create(product=product,quantity=order['quantity'])
+        else:
+            return JsonResponse({"message":f"{product.product_name} has quantity less that ordered quantity"})
+        new_order.save()
+        product.save()
     return JsonResponse({"message":"Order List Placement Successful."})

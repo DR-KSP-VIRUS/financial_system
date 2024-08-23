@@ -8,7 +8,7 @@ class ProductTypeForm(forms.ModelForm):
         fields = ['type_name',]
         widgets = {
             'type_name': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Product Category...',
                 'required':True, 'autofocus':True
             }),
@@ -21,32 +21,32 @@ class ProductForm(forms.ModelForm):
         fields = ['product_type','product_name','price','image','quantity','description']
         widgets = {
             'product_type': forms.Select({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Product Category...',
             }),
 
             'product_name': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Product Name...',
                 'autofocus':True,
             }),
 
             'price': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Product price...',
             }),
 
             'image': forms.ClearableFileInput({
-                'class':"min-w-full border rounded px-2 py-0 border-orange-300 focus-within:outline-orange-500",
+                "class":"form-control",
             }),
 
             'quantity': forms.NumberInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                "class":"form-control",
                 'placeholder': 'Number of Products...',
             }),
 
             'description': forms.Textarea({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Product Description...',
                 'rows':3
             }),
@@ -59,22 +59,22 @@ class OrderForm(forms.ModelForm):
         fields = ['id','quantity','client_name','phone']
         widgets = {
             'id': forms.HiddenInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
             }),
 
             'quantity': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Number Ordering ...',
                 'required':True, 'autofocus':True
             }),
 
             'client_name': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Your Full Name...'
             }),
 
             'phone': forms.TextInput({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
                 'placeholder': 'Your Phone Number'
             }),
         }
@@ -85,6 +85,6 @@ class SaleForm(forms.ModelForm):
         fields = ['status']
         widgets = {
             'status': forms.Select({
-                'class':"min-w-full border rounded px-2 py-1 border-orange-300 focus-within:outline-orange-500",
+                'class':"form-control",
             }),
         }
