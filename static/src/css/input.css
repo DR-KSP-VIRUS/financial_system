@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* .nested:hover+.hidden,
+.hidden:hover {
+    display: flex;
+    flex-direction: column;
+} */

@@ -1,0 +1,48 @@
+{% extends "_base.html" %}
+
+{% block title %}Product Categories{% endblock title %}
+
+
+{% block content %}
+    {% include "stores/_product_type.html" %}
+    <div class="bg-gray-200 px-4 py-10 min-h-screen">
+
+        <div class=" mb-6 float-end">
+            <button id="open-login"
+                class="cursor-pointer flex place-content-center text-lg place-items-center border bg-white pl-2 text-emerald-600 rounded shadow-sm shadow-blue-200 transition active:scale-90 hover:border-b">
+                Product Type
+                <span class="text-2xl bg-gray-800 text-white py-1 ml-1 px-2 rounded-r">&plus;</span>
+                </buton>
+        </div>
+
+        <div class="bg-white min-w-full shadow-md my-16 rounded">
+            <h1 class="text-2xl font-semibold text-gray-700 px-6 py-4 border-b">Product Categories</h1>
+            <div class="p-4 min-w-full rounded overflow-x-scroll overflow-hidden">
+                <table class="table-fixed border min-w-full text-sm text-left text-gray-500">
+                    <thead class="text-sm text-gray-700 uppercase bg-gray-50">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">No.</th>
+                            <th scope="col" class="px-6 py-3 whitespace-nowrap">Product Category</th>
+                            <th scope="col" class="px-6 py-3 md:text-center">Products</th>
+                            <th scope="col" class="px-6 py-3 md:text-center">View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in product_categories %}
+                        <tr class="bg-white border-t hover:bg-gray-100">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{forloop.counter}}</th>
+                            <td class="px-6 py-4 whitespace-nowrap">{{category.type_name}}</td>
+                            <td class="px-6 py-4 md:text-center">{{category.product_types.count}}</td>
+                            <td class="px-6 py-4 md:text-center">
+                                <a class=" px-4 py-2 rounded text-emerald-600 bg-white border" href="#">view</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}

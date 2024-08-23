@@ -1,0 +1,37 @@
+<ul class="bg-black fixed text-white flex flex-col min-h-screen max-w-[70px] overflow-hidden md:min-w-[225px]">
+    <li class="my-auto flex px-8 py-5 hover:bg-gray-700">
+        <i class="fa fa-user mr-4 text-2xl"></i>
+        Current User
+    </li>
+    <li class="cursor-pointer px-8 my-3 py-5 hover:bg-gray-700">
+        <a class="flex" href="{% url 'accounts:dashboard' %}">
+            <i class="fa fa-dashboard mr-4 text-2xl"></i>
+            Dashboard
+        </a>
+    </li>
+    <li class="cursor-pointer px-8 my-3 py-5 hover:bg-gray-700">
+        <a class="flex" href="{% url 'stores:categories' %}">
+            <i class="fa fa-briefcase mr-4 text-2xl"></i>
+            Categories
+        </a>
+    </li>
+    <li class="cursor-pointer px-8 my-3 py-5 hover:bg-gray-700">
+        <a class="flex" href="{% url 'stores:products' %}">
+            <i class="fa fa-kitchen-set mr-4 text-2xl"></i>
+            Products
+        </a>
+    </li>
+
+    <li class="cursor-pointer px-8 my-3 py-5 hover:bg-gray-700">
+        <a class="flex" href="{% url 'stores:sales' %}">
+            <i class="fa fa-wallet mr-4 text-2xl"></i>
+            Sales
+        </a>
+    </li>
+    <li class="cursor-pointer mb-0 py-4 my-auto border-t text-red-500 hover:bg-gray-900">
+        <a class=" flex px-8 pb-4" href="{% url 'accounts:logout' %}">
+            <i class="fa fa-arrow-right-from-bracket mr-4 text-2xl"></i>
+            logout
+        </a>
+    </li>
+</ul>
