@@ -3,21 +3,12 @@
         <li class="cursor-pointer hover:border-b">
             <a href="{% url 'stores:home' %}"> Home </a>
         </li>
-        <ul class="mx-auto hidden md:flex">
-            <li class="mx-2 cursor-pointer hover:border-b">
-                <a class="nested">Products</a>
-                <ul class="hidden absolute bg-white/90 backdrop-blur pb-3 px-4">
-                    <li class="cursor-pointer my-1 py-2 px-4 hover:bg-gray-100">New Arrivals</li>
-                    <li class="cursor-pointer my-1 py-2 px-4 hover:bg-gray-100">Old Products</li>
-                </ul>
+        <ul class="mx-auto md:flex">
+            {% if request.user.is_authenticated %}
+            <li class="cursor-pointer hover:border-b">
+                <a href="{% url 'stores:my-orders' %}"> My Orders </a>
             </li>
-            <li class="mx-2 cursor-pointer hover:border-b ">
-                <a class="nested">About Us</a>
-                <ul class="hidden absolute bg-white/90 backdrop-blur pb-3 px-4">
-                    <li class="cursor-pointer my-1 py-2 px-4 hover:bg-gray-100">Our Goals</li>
-                    <li class="cursor-pointer my-1 py-2 px-4 hover:bg-gray-100">Our Partners</li>
-                </ul>
-            </li>
+            {% endif %}
         </ul>
 
         <ul class=" flex self-end">

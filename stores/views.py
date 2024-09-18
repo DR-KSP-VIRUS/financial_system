@@ -5,6 +5,7 @@ from django.core.validators import ValidationError
 from django.db.models import Q
 from django.db import connection
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 from . import models as mdl
@@ -26,6 +27,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, 'stores/index.html', context)
 
 # ==================== search product in the shop ==================
+
 def search_product(request):
     """ user enters the name of the product to search"""
 
@@ -43,6 +45,7 @@ def search_product(request):
     return render(request,"Seller/search_results.html",context)
 
 # ====================== add product to database =====================
+@login_required
 def add_product(request:HttpRequest) -> HttpResponse:
     """ add product type and the product to stock"""
     if request.method == "POST":
@@ -54,7 +57,8 @@ def add_product(request:HttpRequest) -> HttpResponse:
             product.save()
             # valid data has been provided
             return redirect("stores:products")
-    
+
+@login_required  
 def product_list(request:HttpRequest) -> HttpResponse:
     form = fms.ProductForm()
     products = mdl.Product.objects.all()
@@ -67,6 +71,7 @@ def product_list(request:HttpRequest) -> HttpResponse:
 
 
 # ================== store product buy category ================
+@login_required
 def add_category(request):
     """add catergoty of products sell by shop"""
     if request.method == "POST":
@@ -80,7 +85,7 @@ def add_category(request):
             # go add add the products
             return redirect("stores:categories")
 
-    
+@login_required   
 def category_list(request: HttpRequest) -> HttpResponse:
     # render empty form
     form = fms.ProductTypeForm()
@@ -91,6 +96,7 @@ def category_list(request: HttpRequest) -> HttpResponse:
     }
     return render(request,"stores/product_types.html",context)
 
+@login_required
 def product_details(request,id):
     """ show the detailed description of the product"""
     product = get_object_or_404(mdl.Product,pk=id)
@@ -99,18 +105,21 @@ def product_details(request,id):
     }
     return render(request,'stores/product.html',context)
 
+@login_required
 def delete_product(request,pk):
     """delete the product from database"""
     product = get_object_or_404(mdl.Product,pk=pk)
     product.delete()
     return redirect("stores:products")
 
+@login_required
 def delete_product_category(request,pk):
     """delete the product from database"""
     product = get_object_or_404(mdl.ProductType,pk=pk)
     product.delete()
     return redirect("stores:products")
 
+@login_required
 def sales_list(request:HttpRequest) -> HttpResponse:
     orders = mdl.Order.objects.order_by('-updated').all()
     context = {
@@ -134,11 +143,13 @@ def place_orders(request:HttpRequest, *args, **kwargs) -> JsonResponse:
         return JsonResponse({"message":"Order List Placement Successful."})
     return JsonResponse({'message':"Login to place your orders"})
 
+@login_required
 def customer_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
     context = {
     }
     return render(request, 'stores/my_orders.html', context)
 
+@login_required
 def customer_json_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
     orders = mdl.Order.objects.select_related('product').filter(customer=request.user).order_by('-created').all().values('product__product_name',                                                     'product__price',
       'quantity', 

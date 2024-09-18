@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return orders.json();
     }
     let results = await getOrders();
-    console.log(results.orders);
 
     const formatTable = () => {
         let rows = "";

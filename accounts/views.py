@@ -28,8 +28,9 @@ def user_login_form(request: HttpRequest) -> HttpResponse:
 def signup(request:HttpRequest, *args, **kwargs) -> HttpResponse:
     if request.method == 'POST':
         form = fms.SignupForm(data=request.POST)
+        print(form.errors)
         if form.is_valid():
-            form.save(commit=True)
+            form.save()
             return redirect('stores:home')
     return redirect('stores:home')
 
