@@ -56,7 +56,7 @@ class ProductForm(forms.ModelForm):
 class OrderForm(forms.ModelForm):
     class Meta:
         model = mdl.Order
-        fields = ['id','quantity','client_name','phone']
+        fields = ['id','quantity','customer']
         widgets = {
             'id': forms.HiddenInput({
                 'class':"form-control",
@@ -68,14 +68,9 @@ class OrderForm(forms.ModelForm):
                 'required':True, 'autofocus':True
             }),
 
-            'client_name': forms.TextInput({
+            'customer': forms.TextInput({
                 'class':"form-control",
                 'placeholder': 'Your Full Name...'
-            }),
-
-            'phone': forms.TextInput({
-                'class':"form-control",
-                'placeholder': 'Your Phone Number'
             }),
         }
 

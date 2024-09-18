@@ -3,6 +3,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.core.validators import ValidationError
 from django.db.models import Q
+from django.db import connection
 from django.contrib import messages
 
 
@@ -16,9 +17,11 @@ from accounts import forms as ac_fms
 def index(request: HttpRequest) -> HttpResponse:
     products = mdl.Product.objects.order_by('-updated').all()
     login_form = ac_fms.LoginForm()
+    signup_form = ac_fms.SignupForm()
     context={
         "products":products,
-        'form':login_form
+        'form':login_form,
+        'signupform':signup_form
     }
     return render(request, 'stores/index.html', context)
 
@@ -108,10 +111,6 @@ def delete_product_category(request,pk):
     product.delete()
     return redirect("stores:products")
 
-def add_order(request:HttpRequest) -> HttpResponse:
-    return redirect()
-
-
 def sales_list(request:HttpRequest) -> HttpResponse:
     orders = mdl.Order.objects.order_by('-updated').all()
     context = {
@@ -121,13 +120,28 @@ def sales_list(request:HttpRequest) -> HttpResponse:
 
 def place_orders(request:HttpRequest, *args, **kwargs) -> JsonResponse:
     orders = json.loads(request.body)
-    for order in orders:
-        product = get_object_or_404(mdl.Product, pk=order['id'])
-        if product.quantity >= int(order['quantity']):
-            product.quantity -= order['quantity']
-            new_order = mdl.Order.objects.create(product=product,quantity=order['quantity'])
-        else:
-            return JsonResponse({"message":f"{product.product_name} has quantity less that ordered quantity"})
-        new_order.save()
-        product.save()
-    return JsonResponse({"message":"Order List Placement Successful."})
+    if request.user.is_authenticated:
+        for order in orders:
+            product = get_object_or_404(mdl.Product, pk=order['id'])
+            if product.quantity >= int(order['quantity']):
+                product.quantity -= order['quantity']
+                new_order = mdl.Order.objects.create(product=product,quantity=order['quantity'])
+            else:
+                return JsonResponse({"message":f"{product.product_name} has     quantity less that ordered quantity"})
+            new_order.customer = request.user
+            new_order.save()
+            product.save()
+        return JsonResponse({"message":"Order List Placement Successful."})
+    return JsonResponse({'message':"Login to place your orders"})
+
+def customer_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
+    context = {
+    }
+    return render(request, 'stores/my_orders.html', context)
+
+def customer_json_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
+    orders = mdl.Order.objects.select_related('product').filter(customer=request.user).order_by('-created').all().values('product__product_name',                                                     'product__price',
+      'quantity', 
+      'created'
+    )
+    return JsonResponse({'orders':list(orders)})

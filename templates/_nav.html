@@ -1,9 +1,9 @@
-<div class="bg-white/50 text-gray-600 px-8 py-4 border-b fixed w-full backdrop-blur">
+<div class="bg-white/50 z-50 text-gray-600 px-8 py-4 border-b fixed w-full backdrop-blur">
     <ul class="flex place-content-between">
         <li class="cursor-pointer hover:border-b">
             <a href="{% url 'stores:home' %}"> Home </a>
         </li>
-        <ul class="mx-auto flex">
+        <ul class="mx-auto hidden md:flex">
             <li class="mx-2 cursor-pointer hover:border-b">
                 <a class="nested">Products</a>
                 <ul class="hidden absolute bg-white/90 backdrop-blur pb-3 px-4">
@@ -19,14 +19,21 @@
                 </ul>
             </li>
         </ul>
-        <li id="shopping-cart" class="cursor-pointer">
-            <a  class="relative mr-6" href="#">
-                <i  class="fa fa-cart-shopping relative text-2xl text-gray-600">
-                </i>
-                <span id="cart"
-                    class="absolute flex place-content-center place-items-center -top-4 left-4 px-1 text-sm rounded-full bg-red-500 text-white">0</span>
-            </a>
-        </li>
-        <li id="open-login" class="cursor-pointer hover:border-b">login</li>
+
+        <ul class=" flex self-end">
+            <li id="shopping-cart" class="cursor-pointer relative mr-6">
+                <i  class="fa fa-cart-shopping relative text-2xl text-gray-600"></i>
+                <span id="cart"class="absolute flex place-content-center place-items-center -top-3 left-4 px-1 text-sm rounded-full bg-red-500 text-white">0</span>
+            </li>
+            {% if not user.is_authenticated %}
+                <li id="open-login" class="cursor-pointer hover:border-b">login</li>
+            {% else %}
+                <li class="cursor-pointer text-red-500 hover:border-b">
+                    <a href="{% url 'accounts:logout' %}">
+                        logout
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
     </ul>
 </div>

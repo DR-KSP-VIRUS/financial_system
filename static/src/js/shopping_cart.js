@@ -16,8 +16,6 @@ const closeInfo = document.getElementById("close-info");
 let records = [];
 let total = 0
 
-
-
 cartBtns.forEach((btn, i) => {
     btn.addEventListener("click", () => {
         let data = `${btn.previousElementSibling.value}`.split(',');
@@ -32,7 +30,6 @@ cartBtns.forEach((btn, i) => {
 
     });
 });
-
 
 shoppingCart.addEventListener("click", () => {
     orderForm.classList.replace("hidden", "flex");
@@ -116,6 +113,7 @@ const formatTable = () => {
 submitOrders.addEventListener("click", async () => {
     if (records.length !== 0) {
         try {
+
             let res = await fetch("/place-orders",
                 {
                     method: "POST",

@@ -48,10 +48,8 @@ class Order(models.Model):
         ('d', 'Delivered'),('f', 'Failed'),
     )
     product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='product_sales')
-    date_ordered = models.DateTimeField(auto_now_add=True)
-    quantity = models.PositiveIntegerField(verbose_name="Number Ordered",default=0)
-    client_name = models.CharField("Client Name",max_length=25,null=True)
-    phone = models.CharField(max_length=20, null=True)
+    quantity = models.PositiveIntegerField(default=0)
+    customer = models.ForeignKey(User,null=True, on_delete=models.CASCADE, related_name='customer_orders')
     status = models.CharField(max_length=5,choices=STATUS, null=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

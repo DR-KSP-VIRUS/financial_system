@@ -4,4 +4,5 @@ package-lock.json
 stores/__pycache__/
 accounts/__pycache__/
 financial_system/__pycache__/
-static/CACHE/
+static/CACHE
+media

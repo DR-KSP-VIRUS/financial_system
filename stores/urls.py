@@ -12,7 +12,9 @@ urlpatterns = [
     path('products',v.product_list, name='products'),
     path('sales',v.sales_list, name='sales'),
     path('place-orders',v.place_orders, name='place-orders'),
-    
+    path('my-orders', v.customer_orders, name='my-orders'),
+    path('my-orders-json', v.customer_json_orders, name='my-orders-ajax'),
+
     # home
     # path('',main_views.index_page,name="home"),
     # # add to stock

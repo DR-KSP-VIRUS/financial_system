@@ -1,5 +1,3 @@
-
-
 const loginForm = document.getElementById("login-form");
 const closeForm = document.getElementById("close-form");
 const openLogin = document.getElementById("open-login");

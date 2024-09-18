@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class UserManager(BaseUserManager):
     
-    def create_user(self, email, password=None, is_active=True, is_admin=False, is_staff=False):
+    def create_user(self, email, password=None, is_active=True, is_admin=False, is_staff=False, is_customer=False):
         if not email:
             raise ValueError("User must have email")
         if not password or len(password) < 6:
@@ -15,6 +15,7 @@ class UserManager(BaseUserManager):
         user_obj.admin = is_admin
         user_obj.active = is_active
         user_obj.staff = is_staff
+        user_obj.customer = is_customer
         user_obj.save(using=self._db)
         return user_obj
     
@@ -26,9 +27,17 @@ class UserManager(BaseUserManager):
         user = self.create_user(
             email, password=password,
             is_admin=True,
-            is_staff=True
+            is_staff=True,
+            is_customer=True
         )
 
+        return user
+    def create_customeruser(self, email, password=None):
+        user = self.create_user(
+            email,
+            password=password,
+            is_customer=True
+        )
         return user
 
 # Create your models here.
@@ -37,6 +46,9 @@ class User(AbstractBaseUser):
     active = models.BooleanField(default=True)
     admin = models.BooleanField(default=False)
     staff = models.BooleanField(default=False)
+    full_name = models.CharField(max_length=255, null=True)
+    phone = models.CharField(max_length=20, null=True)
+    customer = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
     USERNAME_FIELD = 'email'
@@ -68,3 +80,7 @@ class User(AbstractBaseUser):
     @property
     def is_active(self):
         return self.active
+    
+    @property
+    def is_customer(self):
+        return self.customer

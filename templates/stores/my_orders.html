@@ -1,9 +1,14 @@
+{% extends "base.html" %}
 
-<div id="order-form" class="bg-black/50 z-50 hidden fixed top-0 left-0 bottom-0 right-0 place-content-center place-items-center min-w-full min-h-screen px-6 backdrop-blur-sm ">
-    <div class="bg-white flex flex-col w-full rounded -top-16 lg:max-w-[720px]">
-        <h1 class="font-extrabold text-2xl px-4 py-2 min-w-full flex flex-row place-content-between border-b"> 
+{% block title %}My Orders{% endblock title %}
+
+{% block content %}
+{% include "_cart_modal.html" %}
+
+<div class="bg-gray-50 z-10 flex place-items-start place-content-center min-h-screen min-w-full mt-16 px-6">
+    <div class="bg-white flex flex-col w-full rounded lg:max-w-[800px]">
+        <h1 class="font-extrabold text-2xl px-4 py-2 min-w-full border-b">
             My Orders
-            <span id="close-sale" class="text-red-600 cursor-pointer transition active:scale-90">&times;</span> 
         </h1>
         <div class="p-4 min-w-full relative rounded overflow-x-scroll overflow-hidden max-h-[80vh] overflow-y-scroll">
             <table class="table-fixed border min-w-full text-sm text-left text-gray-500 ">
@@ -13,16 +18,20 @@
                         <th scope="col" class="px-6 py-3">Product</th>
                         <th scope="col" class="px-6 py-3 md:text-center">Price</th>
                         <th scope="col" class="px-6 py-3 md:text-center">Quantity</th>
+                        <th scope="col" class="px-6 py-3 text-center whitespace-nowrap">Date Ordered</th>
                         <th scope="col" class="px-6 py-3 text-center">SubTotal</th>
                     </tr>
                 </thead>
-                <tbody id="order-table">
-                        
+                <tbody id="my-order-table">
                 </tbody>
             </table>
         </div>
-        <div class="flex w-full place-content-end">
-            <button id="submit-orders" class="bg-orange-600 text-white rounded border place-content-end px-4 my-4 mx-2 py-1 border-orange-600 roundedtransition active:scale-90 hover:bg-orange-700 hover:text-white">Submit Orders</button>
-        </div>
     </div>
 </div>
+{% endblock content %}
+
+{% block script %}
+<script>
+
+</script>
+{% endblock script %}

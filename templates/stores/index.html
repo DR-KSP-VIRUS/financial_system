@@ -1,4 +1,4 @@
-{% extends "_base.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block title %}Home{% endblock title %}
@@ -6,7 +6,7 @@
 
 {% block content %}
 
-{% include "accounts/_login.html" %}
+{% include "_login.html" %}
 {% include "_cart_modal.html" %}
 
 
@@ -33,16 +33,5 @@
             </div>
         </div>
     {% endfor %}
-    <div id="show-order-info" class="bg-black/50 backdrop-blur fixed hidden place-content-center place-items-center top-0 bottom-0 right-0 left-0">
-        <div class="bg-white flex flex-col rounded">
-            <h3 class="text-2xl font-bold my-2 flex flex-col place-items-center border-b py-2 px-2">
-                <i class="fa fa-info-circle text-gray-500 text-3xl"></i>
-                Order Information
-            </h3>
-            <p id="order-info" class="text-gray-500 py-4 px-2 my-2">Order placement successfull!</p>
-
-            <button id="close-info" class=" bg-white border mx-2 my-1 whitespace-nowrap px-4 py-1 border-orange-600 rounded transition active:scale-90 hover:bg-orange-700 hover:text-white">OK!</button>
-        </div>
-    </div>
 </div>
 {% endblock content %}
