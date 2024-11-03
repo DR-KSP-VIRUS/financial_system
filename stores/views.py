@@ -1,6 +1,8 @@
 import json
+from datetime import datetime
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.db.models import Count, Sum
 from django.core.validators import ValidationError
 from django.db.models import Q
 from django.db import connection
@@ -97,33 +99,39 @@ def category_list(request: HttpRequest) -> HttpResponse:
     return render(request,"stores/product_types.html",context)
 
 @login_required
-def product_details(request,id):
+def product_details(request:HttpRequest, id:int):
     """ show the detailed description of the product"""
-    product = get_object_or_404(mdl.Product,pk=id)
+    product = get_object_or_404(mdl.Product, pk=id)
     context={
         "product":product,
     }
     return render(request,'stores/product.html',context)
 
 @login_required
-def delete_product(request,pk):
+def delete_product(request:HttpRequest, pk:int):
     """delete the product from database"""
-    product = get_object_or_404(mdl.Product,pk=pk)
+    product = get_object_or_404(mdl.Product, pk=pk)
     product.delete()
     return redirect("stores:products")
 
 @login_required
-def delete_product_category(request,pk):
+def delete_product_category(request:HttpRequest, pk:int):
     """delete the product from database"""
-    product = get_object_or_404(mdl.ProductType,pk=pk)
+    product = get_object_or_404(mdl.ProductType, pk=pk)
     product.delete()
     return redirect("stores:products")
 
 @login_required
 def sales_list(request:HttpRequest) -> HttpResponse:
-    orders = mdl.Order.objects.order_by('-updated').all()
+    orders = mdl.Order.today_orders()
+    weekly = mdl.Order.a_week_orders()
+    previous = mdl.Order.a_week_orders()
+    monthly = mdl.Order.a_week_orders()
     context = {
-        'sales':orders
+        'sales':orders,
+        'weekly': weekly,
+        'previous': previous,
+        'monthly': monthly,    
     }
     return render(request, 'stores/sales.html',context)
 
@@ -151,8 +159,24 @@ def customer_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
 
 @login_required
 def customer_json_orders(request:HttpRequest, *args, **kwargs) -> HttpResponse:
-    orders = mdl.Order.objects.select_related('product').filter(customer=request.user).order_by('-created').all().values('product__product_name',                                                     'product__price',
+    orders = mdl.Order.objects.select_related('product').filter(customer=request.user).order_by('-created').all().values('product__product_name', 'product__price',
       'quantity', 
       'created'
     )
+    # print(orders)
     return JsonResponse({'orders':list(orders)})
+
+
+def cancel_orders(request:HttpRequest, id:int, *args, **kwargs) -> HttpResponse:
+    order = mdl.Order.objects.get(pk=id)
+    order.delete()
+    # print('order will be deleted')
+    return redirect('stores:product-sales',name=order.product.product_name)
+
+def sales_by_product(request: HttpRequest, name:str, *args, **kwargs) -> HttpResponse:
+    productq = mdl.Product.objects.filter(product_name=name).first()
+    context = {
+        'productq': productq,
+        'today':datetime.today().date()
+    }
+    return render(request, 'stores/product_sales.html', context)

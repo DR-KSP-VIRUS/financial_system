@@ -44,7 +44,8 @@ def user_dashboard(request:HttpRequest) -> HttpResponse:
     context = {
         "products":products,
         "categories":categories,
-        "orders":orders
+        "orders":orders,
+        'today_orders':today_orders
     }
     return render(request, 'accounts/dashboard.html',context)
 

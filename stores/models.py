@@ -1,5 +1,6 @@
 from datetime import datetime
 from django.db import models
+from django.db.models import Count, Sum
 from django.contrib.auth import get_user_model
 # Create your models here.
 
@@ -61,7 +62,14 @@ class Order(models.Model):
     @classmethod
     def today_orders(cls):
         return [
-            order for order in cls.objects.all()
-            if order.created.date() == datetime.today().date()
+            order for order in cls.objects.values('product__product_name', 'customer__full_name', 'created','quantity', 'product__price').annotate(order_quantity=Count('product__product_name'), total=Sum('product__price'))
+            if order['created'].date() == datetime.today().date()
     ]
+    
+    @classmethod
+    def a_week_orders(cls):
+        # datetime.weekday
+        return [
+            order  for order in cls.objects.filter(created=datetime(datetime.now().year, datetime.now().month-1, 1)).values('product__product_name','created','quantity', 'product__price').annotate(order_quantity=Count('product__product_name'), total=Sum('product__price'))
+        ]
 

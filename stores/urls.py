@@ -11,7 +11,9 @@ urlpatterns = [
     path('add-product',v.add_product, name='add-product'),
     path('products',v.product_list, name='products'),
     path('sales',v.sales_list, name='sales'),
+    path('product-sales/<str:name>',v.sales_by_product, name='product-sales'),
     path('place-orders',v.place_orders, name='place-orders'),
     path('my-orders', v.customer_orders, name='my-orders'),
     path('my-orders-json', v.customer_json_orders, name='my-orders-ajax'),
+    path('cancel-order/<int:id>', v.cancel_orders, name='cancel-order')
 ]

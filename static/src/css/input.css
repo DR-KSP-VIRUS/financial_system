@@ -18,3 +18,7 @@
 .wrapper {
     @apply bg-white relative flex place-content-between w-full overflow-hidden rounded md:w-[520px]
 }
+
+.top-push {
+    top:4px;
+}
